@@ -33,6 +33,7 @@ class PlayerManager implements Listener {
      * @param $player Player
      */
     private function initPlayer($player) {
+        StormCore::log($player->getUniqueId() . " init");
         $this->players[$player->getUniqueId()] = StormPlayer::withPlayer($player);
     }
 

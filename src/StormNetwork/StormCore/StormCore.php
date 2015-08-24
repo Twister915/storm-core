@@ -36,6 +36,10 @@ final class StormCore extends PluginBase {
         return self::$instance;
     }
 
+    public static function log($message) {
+        self::getInstance()->getLogger()->info($message);
+    }
+
     /**
      * @param $event Event
      */
