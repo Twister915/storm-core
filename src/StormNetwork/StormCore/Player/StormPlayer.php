@@ -112,15 +112,13 @@ class StormPlayer extends StormOfflinePlayer {
      * @param $password string
      */
     public function logUserIn($password) {
-        $uThis = $this;
-        StormClient::sendData("POST", ["username" => $this->getUsername(), "password" => $password, "ip" => $this->getIp()], "users/login", [], function($result) use($uThis) {
+        StormClient::sendData("POST", ["username" => $this->getUsername(), "password" => $password, "ip" => $this->getIp()], "users/login", $this, function($uThis, $result) {
             $uThis->handleAuthCallback($result);
         });
     }
 
     public function register($password, $email) {
-        $uThis = $this;
-        StormClient::sendData("POST", ["username" => $this->getUsername(), "password" => $password, "email" => $email], "users/register", [], function ($result) use ($uThis) {
+        StormClient::sendData("POST", ["username" => $this->getUsername(), "password" => $password, "email" => $email], "users/register", $this, function ($uThis, $result) {
             $uThis->handleAuthCallback($result);
         });
     }

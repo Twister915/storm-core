@@ -31,9 +31,9 @@ class StormHttpCallThreaded extends AsyncTask {
     private $callback;
 
     /**
-     * @var array
+     * @var mixed
      */
-    private $customData;
+    private $caller;
 
     private $result;
 
@@ -42,14 +42,14 @@ class StormHttpCallThreaded extends AsyncTask {
      * @param string $route
      * @param array $data
      * @param string $method
-     * @param array $customData
+     * @param mixed $caller
      * @param callable $callback
      */
-    public function __construct($route, array $data, $method, array $customData, callable $callback) {
+    public function __construct($route, array $data, $method, $caller, callable $callback) {
         $this->route = $route;
         $this->data = $data;
         $this->method = $method;
-        $this->customData = $customData;
+        $this->caller = $caller;
         $this->callback = $callback;
     }
 
@@ -63,11 +63,15 @@ class StormHttpCallThreaded extends AsyncTask {
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $this->method);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $this->data);
         curl_setopt($ch, CURLOPT_HEADER, ["Authorization: Bearer " . StormClient::$apiKey]);
-        $cmh = curl_multi_init();
-        curl_multi_add_handle($cmh, $ch);
+        curl_setopt($ch, CURLOPT_FRESH_CONNECT, 1);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $result = curl_exec($ch);
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        $this->result = ["response" => json_decode($result, false), "code" => $code, "customData" => $this->customData];
+        curl_close($ch);
+        $this->result = (object)["response" => json_decode($result, false), "code" => $code];
     }
 
     /**
@@ -80,7 +84,7 @@ class StormHttpCallThreaded extends AsyncTask {
      */
     public function onCompletion(Server $server) {
         $cb = $this->callback;
-        $cb($this->result);
+        $cb($this->caller, $this->result);
     }
 
 }

@@ -82,8 +82,8 @@ class PlayerManager implements Listener {
         }
         if ($find) {
             $futurePlayer = new StormFuturePlayer();
-            StormClient::sendData("GET", [], "users/get/name/" . $name, [], function ($result) use($futurePlayer) {
-                $futurePlayer->dropIn(StormOfflinePlayer::withJson($result->response));
+            StormClient::sendData("GET", [], "users/get/name/" . $name, $futurePlayer, function ($result, $uThis) {
+                $uThis->dropIn(StormOfflinePlayer::withJson($result->response));
             });
             return $futurePlayer;
         }
@@ -117,8 +117,8 @@ class PlayerManager implements Listener {
         }
         if ($find) {
             $futurePlayer = new StormFuturePlayer();
-            StormClient::sendData("GET", [], "users/get/id/" . $id, [], function ($result) use($futurePlayer) {
-                $futurePlayer->dropIn(StormOfflinePlayer::withJson($result->response));
+            StormClient::sendData("GET", [], "users/get/id/" . $id, $futurePlayer, function ($uThis, $result) {
+                $uThis->dropIn(StormOfflinePlayer::withJson($result->response));
             });
             return $futurePlayer;
         }
