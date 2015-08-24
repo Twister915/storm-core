@@ -8,6 +8,7 @@
 
 namespace StormNetwork\StormCore\Player;
 
+use StormNetwork\StormCore\Http\StormClient;
 use StormNetwork\StormCore\StormCore;
 
 class StormOfflinePlayer { //todo permissions and roles
@@ -62,7 +63,6 @@ class StormOfflinePlayer { //todo permissions and roles
             ->setUsername($userData->Username)
             ->setId($userData->ID)
             ->setEmail($userData->Email)
-            ->setPunishmentsJson($userData->Punishments)
             ->setMeta($userData->Metadata)
             ->setSessions($userData->Sessions)
             ->setOperator($userData->Operator);
@@ -117,6 +117,13 @@ class StormOfflinePlayer { //todo permissions and roles
         }
         $this->meta = $finMeta;
         return $this;
+    }
+
+    public function updatePunishments() {
+        StormClient::sendData('GET', [], 'punishments/targeted/auth/' . $this->id, $this, function ($uThis, $resp) {
+            if ($resp->code != 200) return;
+            $uThis->setPunishmentsJson($resp->response);
+        });
     }
 
     /**

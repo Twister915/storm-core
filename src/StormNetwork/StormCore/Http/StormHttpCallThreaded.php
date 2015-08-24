@@ -41,6 +41,9 @@ class StormHttpCallThreaded extends AsyncTask {
      */
     private $key;
 
+    private $scheduleCount = 0;
+    private $shouldReschdule = false;
+
     /**
      * StormHttpCallThreaded constructor.
      * @param string $url
@@ -82,14 +85,13 @@ class StormHttpCallThreaded extends AsyncTask {
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
         $error = curl_error($ch);
-        if ($error !== "") {
-            print($error);
-        } else {
-            print($body);
-            print(" " . $type);
-        }
-        print("\n");
         curl_close($ch);
+
+        if ($error !== "") {
+            $this->shouldReschdule = true;
+            return;
+        }
+
         $this->result = (object)["response" => strpos($type, 'json') !== false ? json_decode($body) : $body, "code" => (int)$code];
     }
 
@@ -102,8 +104,18 @@ class StormHttpCallThreaded extends AsyncTask {
      * @return void
      */
     public function onCompletion(Server $server) {
+        if ($this->shouldReschdule) {
+            $this->schedule();
+            return;
+        }
         $cb = $this->callback;
         $cb($this->caller, $this->result);
+    }
+
+    public function schedule() {
+        $this->scheduleCount++;
+        if ($this->scheduleCount > 10) throw new StormClientException("10 failed attempts to make request!");
+        Server::getInstance()->getScheduler()->scheduleAsyncTask($this);
     }
 
 }
