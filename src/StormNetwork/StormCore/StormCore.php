@@ -7,6 +7,7 @@ use pocketmine\event\Event;
 use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
+use StormNetwork\StormCore\Frontend\Player\AuthenticationListener;
 use StormNetwork\StormCore\Player\PlayerManager;
 use StormNetwork\StormCore\Http\StormClient;
 
@@ -52,6 +53,8 @@ final class StormCore extends PluginBase {
         StormClient::setApiHost($this->getConfig()->get("api-host"));
         $this->writeDefault("formats.yml");
         $this->formats = new Config("formats.yml");
+
+        self::registerListener(new AuthenticationListener());
     }
 
     private function writeDefault($name) {
