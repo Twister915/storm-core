@@ -23,7 +23,7 @@ use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\Player;
 use StormNetwork\StormCore\Player\Event\PlayerAuthenticationErrorEvent;
-use StormNetwork\StormCore\Player\PlayerAuthenticateEvent;
+use StormNetwork\StormCore\Player\Event\PlayerAuthenticateEvent;
 use StormNetwork\StormCore\StormCore;
 use StormNetwork\StormCore\StormFormatter;
 

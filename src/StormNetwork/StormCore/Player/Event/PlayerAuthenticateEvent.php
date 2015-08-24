@@ -6,10 +6,11 @@
  * Time: 11:42 PM
  */
 
-namespace StormNetwork\StormCore\Player;
+namespace StormNetwork\StormCore\Player\Event;
 
 
 use pocketmine\event\Event;
+use StormNetwork\StormCore\Player\StormPlayer;
 
 class PlayerAuthenticateEvent extends Event {
     public static $handlerList = null;
