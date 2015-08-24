@@ -45,6 +45,6 @@ class StormClient {
     public static function sendData($method, $data, $route, $caller, $callback) {
         $thread = new StormHttpCallThreaded($method, $data, $route, $caller, $callback);
         Server::getInstance()->getScheduler()->scheduleAsyncTask($thread);
-        StormCore::log("Making call to " . StormClient::$apiHost . "/v1/" . $route);
+        StormCore::log("Making call to " . StormClient::$apiHost . $route);
     }
 }

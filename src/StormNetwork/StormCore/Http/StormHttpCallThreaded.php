@@ -11,7 +11,6 @@ namespace StormNetwork\StormCore\Http;
 
 use pocketmine\scheduler\AsyncTask;
 use pocketmine\Server;
-use StormNetwork\StormCore\StormCore;
 
 class StormHttpCallThreaded extends AsyncTask {
     /**
