@@ -16,7 +16,7 @@ class StormHttpCallThreaded extends AsyncTask {
     /**
      * @var string
      */
-    private $route;
+    private $url;
     /**
      * @var array
      */
@@ -39,14 +39,14 @@ class StormHttpCallThreaded extends AsyncTask {
 
     /**
      * StormHttpCallThreaded constructor.
-     * @param string $route
+     * @param string $url
      * @param array $data
      * @param string $method
      * @param mixed $caller
      * @param callable $callback
      */
-    public function __construct($method, $data, $route, $caller, $callback) {
-        $this->route = $route;
+    public function __construct($method, $data, $url, $caller, $callback) {
+        $this->url = $url;
         $this->data = $data;
         $this->method = $method;
         $this->caller = $caller;
@@ -59,7 +59,7 @@ class StormHttpCallThreaded extends AsyncTask {
      * @return void
      */
     public function onRun() {
-        $ch = curl_init(StormClient::$apiHost . $this->route);
+        $ch = curl_init($this->url);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $this->method);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $this->data);
         curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Bearer " . StormClient::$apiKey]);
