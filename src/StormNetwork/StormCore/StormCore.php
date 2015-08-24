@@ -71,6 +71,10 @@ final class StormCore extends PluginBase {
 
         $this->registerStormCommand("login", new LoginCommand());
         $this->registerStormCommand("register", new RegisterCommand());
+
+        StormClient::sendData('GET', [], '/ping', $this, function($t, $r) {
+            self::log("Made ping, response code: " . $r->code);
+        });
     }
 
     public function registerStormCommand($name, StormCommand $command) {

@@ -132,7 +132,7 @@ class StormPlayer extends StormOfflinePlayer {
     public function handleAuthCallback($result) {
         if ($result->code != 200) {
             $this->authenticated = false;
-            StormCore::callEvent(new PlayerAuthenticationErrorEvent($this, $result));
+            StormCore::callEvent(new PlayerAuthenticationErrorEvent($this, $result->response));
             return;
         }
 
