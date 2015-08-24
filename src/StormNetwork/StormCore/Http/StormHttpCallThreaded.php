@@ -36,6 +36,10 @@ class StormHttpCallThreaded extends AsyncTask {
     private $caller;
 
     private $result;
+    /**
+     * @var string
+     */
+    private $key;
 
     /**
      * StormHttpCallThreaded constructor.
@@ -51,6 +55,7 @@ class StormHttpCallThreaded extends AsyncTask {
         $this->method = $method;
         $this->caller = $caller;
         $this->callback = $callback;
+        $this->key = StormClient::$apiKey;
     }
 
     /**
@@ -64,7 +69,7 @@ class StormHttpCallThreaded extends AsyncTask {
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $this->method);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $this->data);
         }
-        curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Bearer " . StormClient::$apiKey]);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Bearer " . $this->key]);
         curl_setopt($ch, CURLOPT_FRESH_CONNECT, 1);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -77,7 +82,7 @@ class StormHttpCallThreaded extends AsyncTask {
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
         $error = curl_error($ch);
-        if (isset($error)) {
+        if ($error !== "") {
             print($error);
         } else {
             print($body);
