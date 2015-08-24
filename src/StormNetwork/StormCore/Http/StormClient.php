@@ -43,9 +43,7 @@ class StormClient {
      * @throws StormClientException
      */
     public static function sendData($method, $data, $route, $customData, $callback) {
-        $thread = new StormHttpCallThreaded($method, $data, $route, $customData, function ($result) use($callback) {
-            StormCore::getInstance()->getServer()->getScheduler()->scheduleTask(new StormCallbackTask($callback, $result));
-        });
+        $thread = new StormHttpCallThreaded($method, $data, $route, $customData, $callback);
         Server::getInstance()->getScheduler()->scheduleAsyncTask($thread);
     }
 }

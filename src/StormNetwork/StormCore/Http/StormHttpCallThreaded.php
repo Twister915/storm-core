@@ -10,6 +10,7 @@ namespace StormNetwork\StormCore\Http;
 
 
 use pocketmine\scheduler\AsyncTask;
+use pocketmine\Server;
 
 class StormHttpCallThreaded extends AsyncTask {
     /**
@@ -33,6 +34,8 @@ class StormHttpCallThreaded extends AsyncTask {
      * @var array
      */
     private $customData;
+
+    private $result;
 
     /**
      * StormHttpCallThreaded constructor.
@@ -64,7 +67,20 @@ class StormHttpCallThreaded extends AsyncTask {
         curl_multi_add_handle($cmh, $ch);
         $result = curl_exec($ch);
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        $callback = $this->callback;
-        $callback(["response" => json_decode($result, false), "code" => $code, "customData" => $this->customData]);
+        $this->result = ["response" => json_decode($result, false), "code" => $code, "customData" => $this->customData];
     }
+
+    /**
+     * Actions to execute when completed (on main thread)
+     * Implement this if you want to handle the data in your AsyncTask after it has been processed
+     *
+     * @param Server $server
+     *
+     * @return void
+     */
+    public function onCompletion(Server $server) {
+        $cb = $this->callback;
+        $cb($this->result);
+    }
+
 }

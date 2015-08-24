@@ -3,3 +3,5 @@ player-auth-fail: "&c{{message}}"
 player-need-auth: "&cYou must authenticate before you can do that!"
 awaiting-auth-callback: "&aPlease wait while we log you in..."
 awaiting-register-callback: "&aPlease wait while we register you..."
+
+prefix: "&eStorm&7>&e "
