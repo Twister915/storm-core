@@ -45,4 +45,12 @@ class StormClient {
     public static function sendData($method, $data, $route, $caller, $callback) {
         (new StormHttpCallThreaded($method, $data, self::$apiHost . '/' . $route, $caller, $callback))->schedule();
     }
+
+    public static function teaseError($obj) {
+        if (is_string($obj)) {
+            return $obj;
+        }
+        if (isset($obj->error)) return $obj->error;
+        return 'error';
+    }
 }

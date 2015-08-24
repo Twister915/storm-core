@@ -67,7 +67,7 @@ final class StormFormatter {
     public function get() {
         $working = self::colorChat($this->format);
         foreach ($this->input as $key=>$value) {
-            $working = preg_replace('/{{' . $key . '}}/i', $this->coloredInputs ? self::colorChat($value) : $value, $working);
+            $working = preg_replace('/{{' . $key . '}}/i', $this->coloredInputs ? self::colorChat((string)$value) : (string)$value, $working);
         }
         if ($this->prefix) $working = self::$prefixValue . $working;
         return $working;
