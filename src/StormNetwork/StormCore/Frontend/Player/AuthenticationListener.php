@@ -45,7 +45,7 @@ class AuthenticationListener implements Listener {
         if (!$this->playerIsAuthenticated($event->getPlayer())) {
             $event->setCancelled(true);
             $uuid = $event->getPlayer()->getUniqueId();
-            if (isset($this->lastMsg[$uuid]) && $this->lastMsg[$uuid] - time() < 5)
+            if (isset($this->lastMsg[$uuid]) && time() - $this->lastMsg[$uuid] < 5)
                 return;
             $this->lastMsg[$uuid] = time();
             $event->getPlayer()->sendMessage(StormFormatter::withPath("player-need-auth")->get());
@@ -64,7 +64,7 @@ class AuthenticationListener implements Listener {
     }
 
     public function onPlayerCommand(PlayerCommandPreprocessEvent $event) {
-        $this->handleAuthenticatedEvent($event);
+//        $this->handleAuthenticatedEvent($event);
     }
 
     public function onPlayerInteract(PlayerInteractEvent $event) {
