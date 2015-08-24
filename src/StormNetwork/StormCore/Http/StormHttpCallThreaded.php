@@ -60,8 +60,10 @@ class StormHttpCallThreaded extends AsyncTask {
      */
     public function onRun() {
         $ch = curl_init($this->url);
-        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $this->method);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $this->data);
+        if ($this->method !== "GET") {
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $this->method);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $this->data);
+        }
         curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Bearer " . StormClient::$apiKey]);
         curl_setopt($ch, CURLOPT_FRESH_CONNECT, 1);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -69,19 +71,20 @@ class StormHttpCallThreaded extends AsyncTask {
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_HEADER, 1);
-
         $result = curl_exec($ch);
+        $header_size = curl_getinfo($ch,CURLINFO_HEADER_SIZE);
+        $body = substr($result, 0, $header_size);
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
         $error = curl_error($ch);
         if (isset($error)) {
             print($error);
         } else {
-            print($result);
+            print($body);
         }
         print("\n");
         curl_close($ch);
-        $this->result = (object)["response" => $type == "application/json" ? json_decode($result, false) : $result, "code" => (int)$code];
+        $this->result = (object)["response" => $type == "application/json" ? json_decode($body, false) : $body, "code" => (int)$code];
     }
 
     /**
