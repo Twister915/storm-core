@@ -73,7 +73,7 @@ class StormHttpCallThreaded extends AsyncTask {
         curl_setopt($ch, CURLOPT_HEADER, 1);
         $result = curl_exec($ch);
         $header_size = curl_getinfo($ch,CURLINFO_HEADER_SIZE);
-        $body = substr($result, 0, $header_size);
+        $body = substr($result, $header_size);
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
         $error = curl_error($ch);
