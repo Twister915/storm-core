@@ -33,9 +33,7 @@ class PlayerManager implements Listener {
      * @param $player Player
      */
     private function initPlayer($player) {
-        $stormPlayer = StormPlayer::withPlayer($player);
-        $this->players[$player->getUniqueId()] = $stormPlayer;
-
+        $this->players[$player->getUniqueId()] = StormPlayer::withPlayer($player);
     }
 
     /**
@@ -93,13 +91,10 @@ class PlayerManager implements Listener {
 
     /**
      * @param $player Player
-     * @return null|StormPlayer
+     * @return StormPlayer
      */
     public function getPlayerByPlayer($player) {
-        foreach ($this->players as $pl) {
-            if ($pl->getUsername() == strtolower($player->getName())) return $pl;
-        }
-        return null;
+        return $this->players[$player->getUniqueId()];
     }
 
     /**

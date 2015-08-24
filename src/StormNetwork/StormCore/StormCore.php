@@ -49,8 +49,11 @@ final class StormCore extends PluginBase {
         @mkdir($this->getDataFolder());
         $this->saveDefaultConfig();
         $this->reloadConfig();
+
         StormClient::setApiKey($this->getConfig()->get("api-key"));
         StormClient::setApiHost($this->getConfig()->get("api-host"));
+        $this->playerManager = new PlayerManager();
+
         $this->writeDefault("formats.yml");
         $this->formats = new Config($this->getDataFolder() . "formats.yml", Config::YAML);
         StormFormatter::loadPrefix();
