@@ -86,10 +86,11 @@ class StormHttpCallThreaded extends AsyncTask {
             print($error);
         } else {
             print($body);
+            print(" " . $type);
         }
         print("\n");
         curl_close($ch);
-        $this->result = (object)["response" => $type == "application/json" ? json_decode($body, false) : $body, "code" => (int)$code];
+        $this->result = (object)["response" => $type == "application/json" ? json_decode($body) : $body, "code" => (int)$code];
     }
 
     /**
