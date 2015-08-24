@@ -68,14 +68,20 @@ class StormHttpCallThreaded extends AsyncTask {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_HEADER, 1);
+
         $result = curl_exec($ch);
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $type = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
         $error = curl_error($ch);
         if (isset($error)) {
             print($error);
+        } else {
+            print($result);
         }
+        print("\n");
         curl_close($ch);
-        $this->result = (object)["response" => json_decode($result, false), "code" => (int)$code];
+        $this->result = (object)["response" => $type == "application/json" ? json_decode($result, false) : $result, "code" => (int)$code];
     }
 
     /**
