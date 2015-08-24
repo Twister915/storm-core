@@ -3,11 +3,16 @@
 namespace StormNetwork\StormCore;
 
 
+use pocketmine\command\PluginCommand;
 use pocketmine\event\Event;
 use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
+use StormNetwork\StormCore\Command\CommandRegistration;
+use StormNetwork\StormCore\Command\StormCommand;
 use StormNetwork\StormCore\Frontend\Player\AuthenticationListener;
+use StormNetwork\StormCore\Frontend\Player\LoginCommand;
+use StormNetwork\StormCore\Frontend\Player\RegisterCommand;
 use StormNetwork\StormCore\Player\PlayerManager;
 use StormNetwork\StormCore\Http\StormClient;
 
@@ -59,6 +64,19 @@ final class StormCore extends PluginBase {
         StormFormatter::loadPrefix();
 
         self::registerListener(new AuthenticationListener());
+
+        $this->registerStormCommand("login", new LoginCommand());
+        $this->registerStormCommand("register", new RegisterCommand());
+    }
+
+    public function registerStormCommand($name, StormCommand $command) {
+        $this->registerCommand(new CommandRegistration($name, $command));
+    }
+
+    public function registerCommand(CommandRegistration $stormCommand) {
+        $cmd = new PluginCommand($stormCommand->getName(), $this);
+        $cmd->setExecutor($stormCommand->getCommandHandler());
+        $this->getServer()->getCommandMap()->register($this->getDescription()->getName(), $cmd);
     }
 
     private function writeDefault($name) {

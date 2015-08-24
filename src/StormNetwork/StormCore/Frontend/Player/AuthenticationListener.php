@@ -28,6 +28,7 @@ use StormNetwork\StormCore\StormCore;
 use StormNetwork\StormCore\StormFormatter;
 
 class AuthenticationListener implements Listener {
+    private $lastMsg = array();
 
     /**
      * @param $player Player
@@ -43,6 +44,11 @@ class AuthenticationListener implements Listener {
     private function handleAuthenticatedEvent($event) {
         if (!$this->playerIsAuthenticated($event->getPlayer())) {
             $event->setCancelled(true);
+            $uuid = $event->getPlayer()->getUniqueId();
+            if ($this->lastMsg[$uuid] - time() < 5) {
+                return;
+            }
+            $this->lastMsg[$uuid] = time();
             $event->getPlayer()->sendMessage(StormFormatter::withPath("player-need-auth")->get());
         }
     }
@@ -80,6 +86,7 @@ class AuthenticationListener implements Listener {
 
     public function onPlayerLeave(PlayerQuitEvent $event) {
         if (!$this->playerIsAuthenticated($event->getPlayer())) $event->setQuitMessage(null);
+        unset($this->lastMsg[$event->getPlayer()->getUniqueId()]);
     }
 
     public function onPlayerDamage(EntityDamageEvent $event) {

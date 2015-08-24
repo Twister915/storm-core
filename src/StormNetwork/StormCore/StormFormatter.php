@@ -14,7 +14,7 @@ use pocketmine\utils\TextFormat;
 final class StormFormatter {
     private static $prefixValue;
 
-    public static function loadPrefix() {
+    static function loadPrefix() {
         if (!StormCore::getInstance()->getFormats()->exists("prefix")) self::$prefixValue = '';
         else self::$prefixValue = self::withPath("prefix")->withPrefix(false)->get();
     }
