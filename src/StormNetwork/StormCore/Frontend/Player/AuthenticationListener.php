@@ -95,10 +95,10 @@ class AuthenticationListener implements Listener {
     }
 
     public function onPlayerAuthenticate(PlayerAuthenticateEvent $event) {
-        StormCore::getInstance()->getServer()->broadcastMessage(StormFormatter::withPath("player-join")->with("player", $event->getPlayer()->getUsername()));
+        StormCore::getInstance()->getServer()->broadcastMessage(StormFormatter::withPath("player-join")->with("player", $event->getPlayer()->getUsername())->get());
     }
 
     public function onPlayerAuthenticateError(PlayerAuthenticationErrorEvent $event) {
-        $event->getPlayer()->getPocketMinePlayer()->sendMessage(StormFormatter::withPath("player-auth-fail")->with("message", $event->getError()));
+        $event->getPlayer()->getPocketMinePlayer()->sendMessage(StormFormatter::withPath("player-auth-fail")->with("message", $event->getError())->get());
     }
 }
