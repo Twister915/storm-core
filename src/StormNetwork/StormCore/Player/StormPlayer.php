@@ -105,6 +105,7 @@ class StormPlayer extends StormOfflinePlayer {
         $this
             ->setAuthenticated(true)
             ->setSession($data->session);
+        StormCore::log("Auth'd = " . $this->isAuthenticated());
     }
 
     // REAL FUNCTIONS
