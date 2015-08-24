@@ -9,7 +9,8 @@
 namespace StormNetwork\StormCore\Http;
 
 
-use StormNetwork\StormCore\Http\StormCallbackTask;
+use pocketmine\Server;
+use StormNetwork\StormCore\StormCore;
 
 class StormClient {
     /**
@@ -45,6 +46,6 @@ class StormClient {
         $thread = new StormHttpCallThreaded($method, $data, $route, $customData, function ($result) use($callback) {
             StormCore::getInstance()->getServer()->getScheduler()->scheduleTask(new StormCallbackTask($callback, $result));
         });
-        if (!$thread->start()) throw new StormClientException();
+        Server::getInstance()->getScheduler()->scheduleAsyncTask($thread);
     }
 }

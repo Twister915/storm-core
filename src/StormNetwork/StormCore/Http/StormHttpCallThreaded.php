@@ -9,9 +9,9 @@
 namespace StormNetwork\StormCore\Http;
 
 
-use pocketmine\Thread;
+use pocketmine\scheduler\AsyncTask;
 
-class StormHttpCallThreaded extends Thread {
+class StormHttpCallThreaded extends AsyncTask {
     /**
      * @var string
      */
@@ -50,8 +50,12 @@ class StormHttpCallThreaded extends Thread {
         $this->callback = $callback;
     }
 
-
-    public function run() {
+    /**
+     * Actions to execute when run
+     *
+     * @return void
+     */
+    public function onRun() {
         $ch = curl_init(StormClient::$apiHost . "/v1/" . $this->route);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $this->method);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $this->data);
