@@ -46,7 +46,7 @@ class StormHttpCallThreaded extends AsyncTask {
      * @param mixed $caller
      * @param callable $callback
      */
-    public function __construct($route, array $data, $method, $caller, callable $callback) {
+    public function __construct($method, $data, $route, $caller, $callback) {
         $this->route = $route;
         $this->data = $data;
         $this->method = $method;
