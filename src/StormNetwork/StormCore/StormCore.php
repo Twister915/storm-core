@@ -53,6 +53,7 @@ final class StormCore extends PluginBase {
         StormClient::setApiHost($this->getConfig()->get("api-host"));
         $this->writeDefault("formats.yml");
         $this->formats = new Config("formats.yml");
+        StormFormatter::loadPrefix();
 
         self::registerListener(new AuthenticationListener());
     }
