@@ -41,6 +41,9 @@ final class StormCore extends PluginBase {
         @mkdir($this->getDataFolder());
         $this->saveDefaultConfig();
         $this->reloadConfig();
+
+        StormClient::setApiKey($this->getConfig()->get("api-key"));
+        StormClient::setApiHost($this->getConfig()->get("api-host"));
     }
 
     /**
