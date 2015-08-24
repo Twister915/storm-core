@@ -59,7 +59,7 @@ class StormHttpCallThreaded extends AsyncTask {
      * @return void
      */
     public function onRun() {
-        $ch = curl_init(StormClient::$apiHost . "/v1/" . $this->route);
+        $ch = curl_init(StormClient::$apiHost . $this->route);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $this->method);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $this->data);
         curl_setopt($ch, CURLOPT_HTTPHEADER, ["Authorization: Bearer " . StormClient::$apiKey]);
