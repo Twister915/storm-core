@@ -11,6 +11,7 @@ namespace StormNetwork\StormCore\Http;
 
 use pocketmine\scheduler\AsyncTask;
 use pocketmine\Server;
+use StormNetwork\StormCore\StormCore;
 
 class StormHttpCallThreaded extends AsyncTask {
     /**
@@ -70,6 +71,10 @@ class StormHttpCallThreaded extends AsyncTask {
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         $result = curl_exec($ch);
         $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $error = curl_error($ch);
+        if (isset($error)) {
+            print($error);
+        }
         curl_close($ch);
         $this->result = (object)["response" => json_decode($result, false), "code" => (int)$code];
     }
