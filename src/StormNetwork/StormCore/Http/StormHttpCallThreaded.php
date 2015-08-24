@@ -90,7 +90,7 @@ class StormHttpCallThreaded extends AsyncTask {
         }
         print("\n");
         curl_close($ch);
-        $this->result = (object)["response" => $type == "application/json" ? json_decode($body) : $body, "code" => (int)$code];
+        $this->result = (object)["response" => strpos($type, 'json') !== false ? json_decode($body) : $body, "code" => (int)$code];
     }
 
     /**
