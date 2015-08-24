@@ -6,6 +6,7 @@ namespace StormNetwork\StormCore;
 use pocketmine\event\Event;
 use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
+use pocketmine\utils\Config;
 use StormNetwork\StormCore\Player\PlayerManager;
 use StormNetwork\StormCore\Http\StormClient;
 
@@ -16,6 +17,11 @@ final class StormCore extends PluginBase {
      * @var PlayerManager
      */
     private $playerManager;
+
+    /**
+     * @var Config
+     */
+    private $formats;
 
     /**
      * @return StormCore
@@ -44,6 +50,21 @@ final class StormCore extends PluginBase {
         $this->reloadConfig();
         StormClient::setApiKey($this->getConfig()->get("api-key"));
         StormClient::setApiHost($this->getConfig()->get("api-host"));
+        $this->writeDefault("formats.yml");
+        $this->formats = new Config("formats.yml");
+    }
+
+    private function writeDefault($name) {
+        if(!file_exists($this->getDataFolder() . $name)){
+            $this->saveResource($name, false);
+        }
+    }
+
+    /**
+     * @return Config
+     */
+    public function getFormats() {
+        return $this->formats;
     }
 
     /**

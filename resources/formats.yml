@@ -1,0 +1,3 @@
+player-join: "&e{{player}} has joined the server!"
+player-auth-fail: "&c{{message}}"
+player-need-auth: "&cYou must authenticate before you can do that!"
