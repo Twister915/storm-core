@@ -13,7 +13,7 @@ use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerPreLoginEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\Player;
-use StormNetwork\StormCore\StormClient;
+use StormNetwork\StormCore\Http\StormClient;
 use StormNetwork\StormCore\StormCore;
 
 class PlayerManager implements Listener {

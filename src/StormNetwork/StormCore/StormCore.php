@@ -7,6 +7,7 @@ use pocketmine\event\Event;
 use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
 use StormNetwork\StormCore\Player\PlayerManager;
+use StormNetwork\StormCore\Http\StormClient;
 
 final class StormCore extends PluginBase {
     private static $instance = null;

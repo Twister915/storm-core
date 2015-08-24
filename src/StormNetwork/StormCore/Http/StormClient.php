@@ -6,7 +6,7 @@
  * Time: 5:21 PM
  */
 
-namespace StormNetwork\StormCore;
+namespace StormNetwork\StormCore\Http;
 
 
 use StormNetwork\StormCore\Http\StormCallbackTask;

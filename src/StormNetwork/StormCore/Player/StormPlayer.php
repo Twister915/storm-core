@@ -12,7 +12,7 @@ namespace StormNetwork\StormCore\Player;
 use pocketmine\Player;
 use StormNetwork\StormCore\Player\Event\PlayerAuthenticationErrorEvent;
 use StormNetwork\StormCore\Player\Event\PlayerDeauthenticateEvent;
-use StormNetwork\StormCore\StormClient;
+use StormNetwork\StormCore\Http\StormClient;
 use StormNetwork\StormCore\StormCore;
 
 class StormPlayer extends StormOfflinePlayer {

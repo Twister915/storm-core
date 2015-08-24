@@ -6,7 +6,7 @@
  * Time: 4:49 PM
  */
 
-namespace StormNetwork\StormCore;
+namespace StormNetwork\StormCore\Http;
 
 
 class StormClientException extends \Exception {

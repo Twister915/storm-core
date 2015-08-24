@@ -6,7 +6,7 @@
  * Time: 4:44 PM
  */
 
-namespace StormNetwork\StormCore;
+namespace StormNetwork\StormCore\Http;
 
 
 use pocketmine\Thread;
