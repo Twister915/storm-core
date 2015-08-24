@@ -42,7 +42,7 @@ class StormClient {
      * @param $caller mixed
      * @throws StormClientException
      */
-    public static function sendData($method, $data, $route, $caller, $callback) {
+    public static function sendData($method, $data, $route, &$caller, $callback) {
         (new StormHttpCallThreaded($method, $data, self::$apiHost . '/' . $route, $caller, $callback))->schedule();
     }
 

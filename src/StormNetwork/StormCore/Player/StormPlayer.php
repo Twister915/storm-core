@@ -106,6 +106,7 @@ class StormPlayer extends StormOfflinePlayer {
             ->setAuthenticated(true)
             ->setSession($data->session);
         StormCore::log("Auth'd = " . $this->isAuthenticated());
+        StormCore::log("Auth'd = " . StormCore::getInstance()->getPlayerManager()->getPlayerByPlayer($this->getPocketMinePlayer())->isAuthenticated());
     }
 
     // REAL FUNCTIONS
@@ -128,7 +129,7 @@ class StormPlayer extends StormOfflinePlayer {
         if (!$this->isAuthenticated()) return;
         $this->setAuthenticated(false);
         $this->setSession(null);
-        StormClient::sendData("POST", ["userId" => $this->id], "users/logout", [], function ($result) {});
+        StormClient::sendData("POST", ["userId" => $this->id], "users/logout", $this, function ($result) {});
     }
 
     public function handleAuthCallback($result) {
