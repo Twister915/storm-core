@@ -38,6 +38,7 @@ final class StormCore extends PluginBase {
     public function onEnable() {
         self::$instance = $this;
 
+        @mkdir($this->getDataFolder());
         $this->saveDefaultConfig();
         $this->reloadConfig();
     }
