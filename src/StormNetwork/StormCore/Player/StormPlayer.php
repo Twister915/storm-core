@@ -124,6 +124,7 @@ class StormPlayer extends StormOfflinePlayer {
     }
 
     public function logout() {
+        if (!$this->isAuthenticated()) return;
         $this->setAuthenticated(false);
         $this->setSession(null);
         StormClient::sendData("POST", ["userId" => $this->id], "users/logout", [], function ($result) {});
@@ -132,6 +133,7 @@ class StormPlayer extends StormOfflinePlayer {
     public function handleAuthCallback($result) {
         if ($result->code != 200) {
             $this->authenticated = false;
+            StormCore::log($result->response);
             StormCore::callEvent(new PlayerAuthenticationErrorEvent($this, $result->response));
             return;
         }
