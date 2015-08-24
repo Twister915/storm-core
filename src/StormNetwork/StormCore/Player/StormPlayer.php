@@ -52,6 +52,10 @@ class StormPlayer extends StormOfflinePlayer {
      * @return StormPlayer
      */
     protected function setSession($sessionJson) {
+        if ($sessionJson == null) {
+            $this->session = null;
+            return $this;
+        }
         $this->session = new StormSession($this, $sessionJson->Address);
         return $this;
     }

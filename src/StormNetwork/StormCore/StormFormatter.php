@@ -67,13 +67,13 @@ final class StormFormatter {
     public function get() {
         $working = self::colorChat($this->format);
         foreach ($this->input as $key=>$value) {
-            $working = preg_replace('{{' . $key . '}}', $this->coloredInputs ? self::colorChat($value) : $value, $working);
+            $working = preg_replace('/{{' . $key . '}}/i', $this->coloredInputs ? self::colorChat($value) : $value, $working);
         }
         if ($this->prefix) $working = self::$prefixValue . $working;
         return $working;
     }
 
     private static function colorChat($str) {
-        return preg_replace('&(?=[0-9a-fA-Fk-oK-OrR])', TextFormat::ESCAPE, $str);
+        return preg_replace('/&(?=[0-9a-fk-or])/i', TextFormat::ESCAPE, $str);
     }
 }
