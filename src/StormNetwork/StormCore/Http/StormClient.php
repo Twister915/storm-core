@@ -10,6 +10,7 @@ namespace StormNetwork\StormCore\Http;
 
 
 use pocketmine\Server;
+use StormNetwork\StormCore\StormCore;
 
 class StormClient {
     /**
@@ -38,11 +39,12 @@ class StormClient {
      * @param $data array
      * @param $route string
      * @param $callback callable
-     * @param $customData mixed
+     * @param $caller mixed
      * @throws StormClientException
      */
     public static function sendData($method, $data, $route, $caller, $callback) {
         $thread = new StormHttpCallThreaded($method, $data, $route, $caller, $callback);
         Server::getInstance()->getScheduler()->scheduleAsyncTask($thread);
+        StormCore::log("Making call to " . StormClient::$apiHost . "/v1/" . $route);
     }
 }
