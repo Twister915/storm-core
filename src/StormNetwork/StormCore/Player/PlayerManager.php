@@ -34,7 +34,7 @@ class PlayerManager implements Listener {
      */
     private function initPlayer($player) {
         StormCore::log($player->getUniqueId() . " init");
-        $this->players[] = StormPlayer::withPlayer($player);
+        $this->players[$player->getUniqueId()] = StormPlayer::withPlayer($player);
     }
 
     /**
@@ -95,10 +95,7 @@ class PlayerManager implements Listener {
      * @return StormPlayer
      */
     public function getPlayerByPlayer($player) {
-        foreach ($this->players as $pl) {
-            if ($pl->getUsername() == $player->getName()) return $pl;
-        }
-        return null;
+        return $this->players[$player->getUniqueId()];
     }
 
     /**
