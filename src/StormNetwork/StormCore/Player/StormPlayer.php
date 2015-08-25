@@ -97,6 +97,7 @@ class StormPlayer extends StormOfflinePlayer {
         $pl->username = $player->getName();
         $pl->authenticated = false;
         $pl->ip = $player->getAddress();
+        $pl->attemptAutoAuth();
         return $pl;
     }
 
@@ -105,22 +106,30 @@ class StormPlayer extends StormOfflinePlayer {
         $this
             ->setAuthenticated(true)
             ->setSession($data->session);
-        StormCore::log("Auth'd = " . $this->isAuthenticated());
-        StormCore::log("Auth'd = " . StormCore::getInstance()->getPlayerManager()->getPlayerByPlayer($this->getPocketMinePlayer())->isAuthenticated());
     }
 
     // REAL FUNCTIONS
+    public function attemptAutoAuth() {
+        StormClient::sendData("POST", ["ip" => $this->getIp(), "username" => $this->getUsername(), "uuid" => $this->getPocketMinePlayer()->getUniqueId()], 'users/autoAuth', $this, function($uThis, $resp) {
+            if ($resp->code != 200 || !$resp->response->success) return;
+            /** @noinspection PhpUndefinedMethodInspection */
+            $uThis->loadJson($resp->response);
+        });
+    }
+
     /**
      * @param $password string
      */
     public function logUserIn($password) {
-        StormClient::sendData("POST", ["username" => $this->getUsername(), "password" => $password, "ip" => $this->getIp()], "users/login", $this, function($uThis, $result) {
+        StormClient::sendData("POST", ["username" => $this->getUsername(), "password" => $password, "ip" => $this->getIp(), "uuid" => $this->getPocketMinePlayer()->getUniqueId()], "users/login", $this, function($uThis, $result) {
+            /** @noinspection PhpUndefinedMethodInspection */
             $uThis->handleAuthCallback($result);
         });
     }
 
     public function register($password, $email) {
-        StormClient::sendData("POST", ["username" => $this->getUsername(), "password" => $password, "email" => $email], "users/register", $this, function ($uThis, $result) {
+        StormClient::sendData("POST", ["username" => $this->getUsername(), "password" => $password, "email" => $email, "uuid" => $this->getPocketMinePlayer()->getUniqueId()], "users/register", $this, function ($uThis, $result) {
+            /** @noinspection PhpUndefinedMethodInspection */
             $uThis->handleAuthCallback($result);
         });
     }
@@ -139,7 +148,6 @@ class StormPlayer extends StormOfflinePlayer {
             return;
         }
 
-        $responseData = $result->response;
-        $this->loadJson($responseData);
+        $this->loadJson($result->response);
     }
 }

@@ -12,6 +12,7 @@ use StormNetwork\StormCore\Command\CommandRegistration;
 use StormNetwork\StormCore\Command\StormCommand;
 use StormNetwork\StormCore\Frontend\Player\AuthenticationListener;
 use StormNetwork\StormCore\Frontend\Player\LoginCommand;
+use StormNetwork\StormCore\Frontend\Player\PunishmentListener;
 use StormNetwork\StormCore\Frontend\Player\RegisterCommand;
 use StormNetwork\StormCore\Player\PlayerManager;
 use StormNetwork\StormCore\Http\StormClient;
@@ -68,6 +69,7 @@ final class StormCore extends PluginBase {
         StormFormatter::loadPrefix();
 
         self::registerListener(new AuthenticationListener());
+        self::registerListener(new PunishmentListener());
 
         $this->registerStormCommand("login", new LoginCommand());
         $this->registerStormCommand("register", new RegisterCommand());
