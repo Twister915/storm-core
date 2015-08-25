@@ -30,6 +30,13 @@ class PlayerManager implements Listener {
     }
 
     /**
+     * @return StormPlayer[]
+     */
+    public function getPlayers() {
+        return array_values($this->players);
+    }
+
+    /**
      * @param $player Player
      */
     private function initPlayer($player) {

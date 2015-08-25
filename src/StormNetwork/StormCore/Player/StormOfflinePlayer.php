@@ -122,6 +122,7 @@ class StormOfflinePlayer { //todo permissions and roles
     public function updatePunishments() {
         StormClient::sendData('GET', [], 'punishments/targeted/auth/' . $this->id, $this, function ($uThis, $resp) {
             if ($resp->code != 200) return;
+            /** @noinspection PhpUndefinedMethodInspection */
             $uThis->setPunishmentsJson($resp->response);
         });
     }

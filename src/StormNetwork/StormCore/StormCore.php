@@ -80,6 +80,13 @@ final class StormCore extends PluginBase {
         });
     }
 
+    public function onDisable() {
+        foreach ($this->playerManager->getPlayers() as $player) {
+            $player->logout();
+        }
+    }
+
+
     public function registerStormCommand($name, StormCommand $command) {
         $this->registerCommand(new CommandRegistration($name, $command));
     }
