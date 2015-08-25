@@ -128,7 +128,7 @@ class StormPlayer extends StormOfflinePlayer {
     }
 
     public function register($password, $email) {
-        StormClient::sendData("POST", ["username" => $this->getUsername(), "password" => $password, "email" => $email, "uuid" => $this->getPocketMinePlayer()->getUniqueId()], "users/register", $this, function ($uThis, $result) {
+        StormClient::sendData("POST", ["username" => $this->getUsername(), "password" => $password, "email" => $email, "uuid" => $this->getPocketMinePlayer()->getUniqueId(), "ip" => $this->getIp()], "users/register", $this, function ($uThis, $result) {
             /** @noinspection PhpUndefinedMethodInspection */
             $uThis->handleAuthCallback($result);
         });
