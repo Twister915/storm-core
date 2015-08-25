@@ -23,7 +23,7 @@ class NetDeOpCommand extends StormCommand {
         $player = $args[0];
         StormClient::sendData('POST', ["username" => $player, 'op' => false], 'users/op', $sender, function ($pl, $resp) {
             if ($resp->code != 200) $pl->sendMessage(TextFormat::RED . $resp->response);
-            else $pl->sendMessage(StormFormatter::withPath('deopped-player')->with("player", $resp->response->User->Username)->get());
+            else $pl->sendMessage(StormFormatter::withPath('deopped-player')->with("player", $resp->response->user->Username)->get());
         });
     }
 }

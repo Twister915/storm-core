@@ -23,7 +23,7 @@ class NetOpCommand extends StormCommand {
         $player = $args[0];
         StormClient::sendData('POST', ["username" => $player, 'op' => true], 'users/op', $sender, function ($pl, $resp) {
             if ($resp->code != 200) $pl->sendMessage(TextFormat::RED . $resp->response);
-            else $pl->sendMessage(StormFormatter::withPath('opped-player')->with("player", $resp->response->User->Username)->get());
+            else $pl->sendMessage(StormFormatter::withPath('opped-player')->with("player", $resp->response->user->Username)->get());
         });
     }
 }
