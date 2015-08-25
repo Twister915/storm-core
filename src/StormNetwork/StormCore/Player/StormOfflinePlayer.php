@@ -170,6 +170,7 @@ class StormOfflinePlayer { //todo permissions and roles
      */
     public function setSessions($sessions) {
         $this->sessions = array();
+        if ($this->sessions == null) return $this;
         foreach ($sessions as $session) {
             $this->sessions[] = new StormSession($this, $session->Address);
         }
