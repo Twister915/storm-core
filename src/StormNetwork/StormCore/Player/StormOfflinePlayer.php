@@ -194,4 +194,18 @@ class StormOfflinePlayer { //todo permissions and roles
     public function getMeta() {
         return $this->meta;
     }
+
+    /**
+     * @return boolean
+     */
+    public function isOperator() {
+        return $this->operator;
+    }
+
+    /**
+     * @return StormSession[]
+     */
+    public function getSessions() {
+        return $this->sessions;
+    }
 }

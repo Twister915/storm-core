@@ -12,6 +12,8 @@ use StormNetwork\StormCore\Command\CommandRegistration;
 use StormNetwork\StormCore\Command\StormCommand;
 use StormNetwork\StormCore\Frontend\Player\AuthenticationListener;
 use StormNetwork\StormCore\Frontend\Player\LoginCommand;
+use StormNetwork\StormCore\Frontend\Player\NetDeOpCommand;
+use StormNetwork\StormCore\Frontend\Player\NetOpCommand;
 use StormNetwork\StormCore\Frontend\Player\PunishmentListener;
 use StormNetwork\StormCore\Frontend\Player\RegisterCommand;
 use StormNetwork\StormCore\Player\PlayerManager;
@@ -73,6 +75,8 @@ final class StormCore extends PluginBase {
 
         $this->registerStormCommand("login", new LoginCommand());
         $this->registerStormCommand("register", new RegisterCommand());
+        $this->registerStormCommand("netop", new NetOpCommand());
+        $this->registerStormCommand("netdeop", new NetDeOpCommand());
 
         $var = "yeah";
         StormClient::sendData('GET', [], 'ping', $var, function($t, $r) {
