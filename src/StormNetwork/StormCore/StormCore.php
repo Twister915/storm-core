@@ -7,6 +7,7 @@ use pocketmine\command\PluginCommand;
 use pocketmine\event\Event;
 use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
+use pocketmine\Server;
 use pocketmine\utils\Config;
 use StormNetwork\StormCore\Command\CommandRegistration;
 use StormNetwork\StormCore\Command\StormCommand;
@@ -80,7 +81,7 @@ final class StormCore extends PluginBase {
 
         $var = "yeah";
         StormClient::sendData('GET', [], 'ping', $var, function($t, $r) {
-            StormCore::log("Made ping, response code: " . $r->code);
+            if ($r->code != 200) Server::getInstance()->shutdown();
         });
     }
 
