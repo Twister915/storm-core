@@ -25,21 +25,14 @@ class StormHttpCallThreaded extends AsyncTask {
      * @var string
      */
     private $method;
-    /**
-     * @var callable
-     */
-    private $callback;
-
-    /**
-     * @var mixed
-     */
-    private $caller;
 
     private $result;
     /**
      * @var string
      */
     private $key;
+
+    private $id;
 
     private $scheduleCount = 0;
     private $shouldReschdule = false;
@@ -49,15 +42,12 @@ class StormHttpCallThreaded extends AsyncTask {
      * @param string $url
      * @param array $data
      * @param string $method
-     * @param mixed $caller
-     * @param callable $callback
      */
-    public function __construct($method, $data, $url, &$caller, $callback) {
+    public function __construct($method, $data, $url, $id) {
         $this->url = $url;
         $this->data = $data;
         $this->method = $method;
-        $this->caller = $caller;
-        $this->callback = $callback;
+        $this->id = $id;
         $this->key = StormClient::$apiKey;
     }
 
@@ -108,8 +98,7 @@ class StormHttpCallThreaded extends AsyncTask {
             $this->schedule();
             return;
         }
-        $cb = $this->callback;
-        $cb($this->caller, $this->result);
+        StormClient::finished($this->id, $this->result);
     }
 
     public function schedule() {
