@@ -111,11 +111,11 @@ class StormOfflinePlayer { //todo permissions and roles
      * @return $this StormOfflinePlayer
      */
     protected function setMeta($meta) {
-        $finMeta = array();
+        $this->meta = array();
+        if ($meta == null) return $this;
         foreach ($meta as $metaEntry) {
-            $finMeta[$metaEntry->Key] = $metaEntry->Value;
+            $this->meta[$metaEntry->Key] = $metaEntry->Value;
         }
-        $this->meta = $finMeta;
         return $this;
     }
 
