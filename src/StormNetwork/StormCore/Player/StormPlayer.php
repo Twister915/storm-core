@@ -111,6 +111,7 @@ class StormPlayer extends StormOfflinePlayer {
     // REAL FUNCTIONS
     public function attemptAutoAuth() {
         StormClient::sendData("POST", ["ip" => $this->getIp(), "username" => $this->getUsername(), "uuid" => $this->getPocketMinePlayer()->getUniqueId()], 'users/autoAuth', $this, function($uThis, $resp) {
+            var_dump($resp);
             if ($resp->code != 200 || !$resp->response->success) return;
             /** @noinspection PhpUndefinedMethodInspection */
             $uThis->loadJson($resp->response);
