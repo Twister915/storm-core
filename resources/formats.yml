@@ -1,4 +1,5 @@
 player-join: "&e{{player}} has joined the server!"
+player-login: "&aYou have been authenticated!"
 player-auth-fail: "&c{{message}}"
 player-need-auth: "&cYou must authenticate before you can do that!"
 awaiting-auth-callback: "&aPlease wait while we log you in..."
