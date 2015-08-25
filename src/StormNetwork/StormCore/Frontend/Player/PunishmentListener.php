@@ -15,7 +15,7 @@ use StormNetwork\StormCore\Http\StormClient;
 
 class PunishmentListener implements Listener {
     public function onPlayerLogin(PlayerLoginEvent $event) {
-        StormClient::sendData('GET', ['username' => $event->getPlayer()->getName(), 'ip' => $event->getPlayer()->getAddress()], 'punishments/targeted/noAuth', $this, function ($ca, $resp) {
+        StormClient::sendData('POST', ['username' => $event->getPlayer()->getName(), 'ip' => $event->getPlayer()->getAddress()], 'punishments/targeted/noAuth', $this, function ($ca, $resp) {
             if ($resp->code != 200) return;
             $punishments = $resp->response;
             foreach ($punishments as $punishment) {
