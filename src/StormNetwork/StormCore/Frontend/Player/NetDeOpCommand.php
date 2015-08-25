@@ -21,7 +21,7 @@ class NetDeOpCommand extends StormCommand {
         if (!$sender->hasPermission("storm.netop")) throw new BasicStormCommandException("You do not have permission for this command!");
         if (sizeof($args) < 1) throw new BasicStormCommandException("You did not supply a player!");
         $player = $args[0];
-        StormClient::sendData('POST', ["username" => $player, 'op' => false], 'users/op', $player, function ($pl, $resp) {
+        StormClient::sendData('POST', ["username" => $player, 'op' => false], 'users/op', $sender, function ($pl, $resp) {
             if ($resp->code != 200) $pl->sendMessage(TextFormat::RED . $resp->response);
             else $pl->sendMessage(StormFormatter::withPath('deopped-player')->with("player", $resp->response->Username)->get());
         });
