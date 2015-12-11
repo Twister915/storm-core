@@ -40,8 +40,8 @@ class PlayerManager implements Listener {
      * @param $player Player
      */
     private function initPlayer($player) {
-        StormCore::log($player->getUniqueId() . " init");
-        $this->players[$player->getUniqueId()] = StormPlayer::withPlayer($player);
+        StormCore::log($player->getName() . " init");
+        $this->players[$player->getName()] = StormPlayer::withPlayer($player);
     }
 
     /**
@@ -49,7 +49,7 @@ class PlayerManager implements Listener {
      */
     private function clearPlayer($player) {
         $this->getPlayerByPlayer($player)->logout();
-        unset($this->players[$player->getUniqueId()]);
+        unset($this->players[$player->getName()]);
     }
 
     /**
@@ -102,7 +102,7 @@ class PlayerManager implements Listener {
      * @return StormPlayer
      */
     public function getPlayerByPlayer($player) {
-        return $this->players[$player->getUniqueId()];
+        return $this->players[$player->getName()];
     }
 
     /**
