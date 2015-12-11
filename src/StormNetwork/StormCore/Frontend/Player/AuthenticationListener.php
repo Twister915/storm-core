@@ -44,10 +44,10 @@ class AuthenticationListener implements Listener {
     private function handleAuthenticatedEvent($event) {
         if (!$this->playerIsAuthenticated($event->getPlayer())) {
             $event->setCancelled(true);
-            $uuid = $event->getPlayer()->getUniqueId();
-            if (isset($this->lastMsg[$uuid]) && time() - $this->lastMsg[$uuid] < 5)
+            $name = $event->getPlayer()->getName();
+            if (isset($this->lastMsg[$name]) && time() - $this->lastMsg[$name] < 5)
                 return;
-            $this->lastMsg[$uuid] = time();
+            $this->lastMsg[$name] = time();
             $event->getPlayer()->sendMessage(StormFormatter::withPath("player-need-auth")->get());
         }
     }
@@ -85,7 +85,7 @@ class AuthenticationListener implements Listener {
 
     public function onPlayerLeave(PlayerQuitEvent $event) {
         if (!$this->playerIsAuthenticated($event->getPlayer())) $event->setQuitMessage(null);
-        unset($this->lastMsg[$event->getPlayer()->getUniqueId()]);
+        unset($this->lastMsg[$event->getPlayer()->getName()]);
     }
 
     public function onPlayerDamage(EntityDamageEvent $event) {
