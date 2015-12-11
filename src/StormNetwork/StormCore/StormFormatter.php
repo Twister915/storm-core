@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Electric
- * Date: 8/24/2015
- * Time: 4:05 PM
- */
 
 namespace StormNetwork\StormCore;
-
 
 use pocketmine\utils\TextFormat;
 
@@ -74,6 +67,6 @@ final class StormFormatter {
     }
 
     private static function colorChat($str) {
-        return preg_replace('/&(?=[0-9a-fk-or])/i', TextFormat::ESCAPE, $str);
+        return preg_replace('/&(?=[0-9a-fk-or])/i', "\xc2\xa7", $str);
     }
 }
