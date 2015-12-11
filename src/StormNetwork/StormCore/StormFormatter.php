@@ -67,6 +67,6 @@ final class StormFormatter {
     }
 
     private static function colorChat($str) {
-        return preg_replace('/&(?=[0-9a-fk-or])/i', "\xc2\xa7", $str);
+        return preg_replace('/&(?=[0-9a-fk-or])/i', TextFormat::ESCAPE, $str);
     }
 }

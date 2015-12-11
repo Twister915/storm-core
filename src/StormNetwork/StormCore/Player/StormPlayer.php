@@ -97,7 +97,7 @@ class StormPlayer extends StormOfflinePlayer {
         $pl->username = $player->getName();
         $pl->authenticated = false;
         $pl->ip = $player->getAddress();
-        $pl->attemptAutoAuth();
+//        $pl->attemptAutoAuth();
         return $pl;
     }
 
